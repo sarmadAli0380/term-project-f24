@@ -1,6 +1,6 @@
 name: wf-ci-production
 on:
-  pull_request:
+  push:
     branches:
       - production
 jobs:
