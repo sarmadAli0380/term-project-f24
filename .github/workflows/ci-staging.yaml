@@ -1,9 +1,11 @@
-name: CI-development
+
+name: CI-staging
+
 
 on:
   pull_request:
     branches:
-      - develop
+      - release
 
 jobs:
   linting-job:
@@ -11,6 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        ref: ${ github.ref}
+        Fetch_depth: 0
 
       - name: Install dependencies
         run: npm install htmlhint stylelint --save-dev
