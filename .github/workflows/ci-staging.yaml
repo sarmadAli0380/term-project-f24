@@ -1,0 +1,36 @@
+name: CI-staging
+
+on:
+  pull_request:
+    branches:
+      - release
+
+jobs:
+  linting-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        ref: ${ github.ref}
+        Fetch_depth: 0
+
+      - name: Install dependencies
+        run: npm install htmlhint stylelint --save-dev
+
+      - name: Lint HTML files
+        run: npx htmlhint "src/**/*.html"
+
+      - name: Lint CSS files
+        run: npx stylelint "styles/**/*.css"
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install parcel-bundler --save-dev
+
+      - name: Build project
+        run: npx parcel build src/index.html
